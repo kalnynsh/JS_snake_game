@@ -69,7 +69,6 @@ td.game-table-cell {
 }
 
 .food-unit {
-    background-color: #f0b7a1;
     background: #f0b7a1;
     /* Old browsers */
     background: -moz-linear-gradient(top, #f0b7a1 0%, #8c3310 50%, #752201 51%, #bf6e4e 100%);
@@ -98,7 +97,7 @@ td.game-table-cell {
 }
 
 .options {
-    margin: 15px 0 15px 22%;
+    margin: 15px 0 15px 24%;
     text-align: left;
 }
 
@@ -115,4 +114,42 @@ input#barrierInput {
     /* Chrome10-25,Safari5.1-6 */
     background: linear-gradient(to bottom, #b4e391 0%, #61c419 50%, #b4e391 100%);
     /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+}
+
+.description {
+    margin: 6px 0;
+    display: flex;
+}
+
+.description__snake {
+    width: 15px;
+    height: 15px;
+    margin-right: 15px;
+    border: 1px solid rgb(204, 202, 202);
+    background: #fefcea;
+    background: -moz-linear-gradient(left, #fefcea 0%, #f1da36 100%);
+    background: -webkit-linear-gradient(left, #fefcea 0%, #f1da36 100%);
+    background: linear-gradient(to right, #fefcea 0%, #f1da36 100%);
+}
+
+.description__food {
+    width: 15px;
+    height: 15px;
+    margin-right: 15px;
+    border: 1px solid rgb(228, 225, 225);
+    background: #f0b7a1;
+    background: -moz-linear-gradient(top, #f0b7a1 0%, #8c3310 50%, #752201 51%, #bf6e4e 100%);
+    background: -webkit-linear-gradient(top, #f0b7a1 0%, #8c3310 50%, #752201 51%, #bf6e4e 100%);
+    background: linear-gradient(to bottom, #f0b7a1 0%, #8c3310 50%, #752201 51%, #bf6e4e 100%);
+}
+
+.description__barrier {
+    width: 15px;
+    height: 15px;
+    margin-right: 15px;
+    border: 1px solid rgb(228, 225, 225);
+    background: #b4e391;
+    background: -moz-linear-gradient(top, #b4e391 0%, #61c419 50%, #b4e391 100%);
+    background: -webkit-linear-gradient(top, #b4e391 0%, #61c419 50%, #b4e391 100%);
+    background: linear-gradient(to bottom, #b4e391 0%, #61c419 50%, #b4e391 100%);
 }
