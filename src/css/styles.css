@@ -2,6 +2,8 @@ html,
 body {
     box-sizing: border-box;
     background-color: #f8f8f8;
+    font-family: 'Sans Serif', Trebuchet, Helvetica, sans-serif;
+    font-size: 100%;
 }
 
 .display-score {
@@ -94,4 +96,8 @@ td.game-table-cell {
     text-align: center;
     width: auto;
     height: auto;
+}
+
+.options {
+    margin: 15px 0;
 }
