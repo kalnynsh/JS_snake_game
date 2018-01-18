@@ -138,14 +138,14 @@ function move() {
     // Проверяем:
     //  1) new_unit не часть змейки
     //  2) Змейка не ушла за границу поля
-    // console.log(new_unit);
-    if (!isSnakeUnit(new_unit) && new_unit !== undefined) {
+    // new_unit !== undefined, условие нахождения вполе
+    if (!isRightUnit(new_unit) && (new_unit !== undefined)) {
         // Добавление новой части змейки
         new_unit.classList.add('snake-unit');
         snake.push(new_unit);
 
-        // Проверяем, надо ли убрать хвост, т.е. передвинуться вперед
-        // при отсутсвии съеденной еды убираем хвост
+        // Проверяем, надо ли убрать хвост, т.е. передвинуться вперед.
+        // При отсутствии съеденной еды убираем хвост
         if (!haveFood(new_unit)) {
             // Находим хвост в массиве, первый элемент
             var removed = snake.splice(0, 1)[0];
@@ -159,16 +159,21 @@ function move() {
 }
 
 /**
- * Проверка на змейку
+ * Проверка массива snake на содержание элемента unit
+ * Проверка unita на принадлежность 'barrier-unit'
  * @param unit
  * @returns {boolean}
  */
-function isSnakeUnit(unit) {
+function isRightUnit(unit) {
     var check = false;
     // str.includes(searchStr); поиск подстроки 'unit' в приведенном к строке массиве snake (ES6), return true/false
     // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/includes
 
     if (snake.includes(unit)) {
+        check = true;
+    }
+    // Check if unit is the 'barrier-unit'
+    if (unit.classList.contains('barrier-unit')) {
         check = true;
     }
 
@@ -229,8 +234,7 @@ function haveFood(unit) {
 // }
 
 /**
- * Create Unit: Food and Barrier, or just Food
- * 
+ * Create Unit: Food and Barrier, or just Food 
  * @param barriersFlag {boolean}
  * @returns void
  */
