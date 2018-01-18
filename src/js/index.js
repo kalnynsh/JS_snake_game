@@ -139,7 +139,7 @@ function move() {
     //  1) new_unit не часть змейки
     //  2) Змейка не ушла за границу поля
     // new_unit !== undefined, условие нахождения вполе
-    if (isRightUnit(new_unit) && (new_unit !== undefined)) {
+    if ((new_unit !== undefined) && isRightUnit(new_unit)) {
         // Добавление новой части змейки
         new_unit.classList.add('snake-unit');
         snake.push(new_unit);
@@ -150,7 +150,7 @@ function move() {
             // Находим хвост в массиве, первый элемент
             var removed = snake.splice(0, 1)[0];
 
-            // удаляем хвост - удалением класса змейки
+            // удаляем (сдвигаем хвост) - удалением класса змейки
             removed.classList.remove('snake-unit');
         }
     } else {
@@ -166,17 +166,13 @@ function move() {
  */
 function isRightUnit(unit) {
     var check = false;
+    // console.dir('snake: ' + snake); // [object HTMLTableCellElement],[object HTMLTableCellElement],[object HTMLTableCellElement]
+    // console.dir('unit: ' + unit); // [object HTMLTableCellElement]
     // str.includes(searchStr); поиск подстроки 'unit' в приведенном к строке массиве snake (ES6), return true/false
     // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/includes
-
-    if (unit) {
-        if (!snake.includes(unit)) {
-            check = true;
-        }
-        // Check if unit is the 'barrier-unit'
-        if (!unit.classList.contains('barrier-unit')) {
-            check = true;
-        }
+    // Check if unit don`t belong the 'barrier-unit' and snake don`t include unit
+    if (!snake.includes(unit) && !unit.classList.contains('barrier-unit')) {
+        check = true;
     }
 
     return check;
