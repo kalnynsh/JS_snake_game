@@ -139,7 +139,7 @@ function move() {
     //  1) new_unit не часть змейки
     //  2) Змейка не ушла за границу поля
     // new_unit !== undefined, условие нахождения вполе
-    if (!isRightUnit(new_unit) && (new_unit !== undefined)) {
+    if (isRightUnit(new_unit) && (new_unit !== undefined)) {
         // Добавление новой части змейки
         new_unit.classList.add('snake-unit');
         snake.push(new_unit);
@@ -169,16 +169,19 @@ function isRightUnit(unit) {
     // str.includes(searchStr); поиск подстроки 'unit' в приведенном к строке массиве snake (ES6), return true/false
     // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/includes
 
-    if (snake.includes(unit)) {
-        check = true;
-    }
-    // Check if unit is the 'barrier-unit'
-    if (unit.classList.contains('barrier-unit')) {
-        check = true;
+    if (unit) {
+        if (!snake.includes(unit)) {
+            check = true;
+        }
+        // Check if unit is the 'barrier-unit'
+        if (!unit.classList.contains('barrier-unit')) {
+            check = true;
+        }
     }
 
     return check;
 }
+
 /**
  * Проверка на еду. Если змейка съела "еду", мы увеличиваем счет и удаляем класс еды из классов ячейки
  * @param unit
