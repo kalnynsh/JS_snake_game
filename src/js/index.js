@@ -183,7 +183,9 @@ function isRightUnit(unit) {
 }
 
 /**
- * Проверка на еду. Если змейка съела "еду", мы увеличиваем счет и удаляем класс еды из классов ячейки
+ * Проверка на еду. Если змейка съела "еду", 
+ * мы увеличиваем счет и удаляем класс еды из классов ячейки.
+ * Создаем новую еду и по условию препядствия.
  * @param unit
  * @returns {boolean}
  */
@@ -353,8 +355,3 @@ function refreshGame() {
 
 // Инициализация
 window.onload = init;
-
-// Function Use barriers on field
-// function useBarriers() {
-//     console.log('We use barriers');
-// }
