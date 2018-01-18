@@ -71,9 +71,9 @@ function startGame() {
     setTimeout(createFood, 5000);
 
     haveBarriers = document.getElementById("barrierInput").checked; // set value of input checkbox
-    console.log('useBarrier: ' + haveBarriers);
+    // console.log('useBarrier: ' + haveBarriers);
 
-    if (haveBarriers) useBarrier(); // Use or not option "Barrier"
+    if (haveBarriers) useBarriers(); // Use or not option "Barriers"
 }
 
 /**
@@ -110,7 +110,8 @@ function move() {
     // Сборка классов
     // var snake_head_classes = snake[snake.length - 1].getAttribute('class').split(' ');
     // var snake_head_classes = snake[snake.length - 1].className.split(' ');
-    var snake_head_classes = snake[snake.length - 1].classList; // <td class="game-table-cell cell-15-19 snake-unit"></td>
+    var snake_head_classes = snake[snake.length - 1].classList;
+    // <td class="game-table-cell cell-15-19 snake-unit"></td>
 
     // Сдвиг головы - движение вперед по направления согласно нажатиям клавиш, по обработчику 
     var new_unit;
@@ -125,7 +126,8 @@ function move() {
     } else if (direction == 'x+') {
         new_unit = document.getElementsByClassName('cell-' + (coord_y) + '-' + (coord_x + 1))[0]; // вправо (+ 1)
     } else if (direction == 'y+') {
-        new_unit = document.getElementsByClassName('cell-' + (coord_y - 1) + '-' + (coord_x))[0]; // нумерация строк сверху, координату уменьшаем
+        new_unit = document.getElementsByClassName('cell-' + (coord_y - 1) + '-' + (coord_x))[0];
+        // нумерация строк сверху, координату уменьшаем
     } else if (direction == 'y-') {
         new_unit = document.getElementsByClassName('cell-' + (coord_y + 1) + '-' + (coord_x))[0];
     }
@@ -184,7 +186,9 @@ function haveFood(unit) {
         unit.classList.remove('food-unit');
 
         // запускаем создание еды
-        createFood();
+        // createFood(); // Old
+        // Fasle - no barriers
+        createUnit(false);
 
         // Увеличиваем счет
         score++;
@@ -217,6 +221,77 @@ function createFood() {
             // Устанавливаем флаг "еда создана", статус foodCreated Истина
             foodCreated = true;
             // Выходим из цикла
+        }
+    }
+}
+
+/**
+ * Create Unit: Food and Barrier, or just Food
+ * 
+ * @param haveBarriers {boolean}
+ * @returns void
+ */
+function createUnit(haveBarriers) {
+    var snakeClass = 'snake-unit';
+    var foodClass = 'food-unit'; // always have food
+
+    // but barriers may be not
+    var barrierClass = haveBarriers ? 'barrier-unit' : null;
+    // Status flags
+    var foodCreated = false;
+    var barrierCreated = false;
+
+    // 1 stage create food
+    // пока статус foodCreated не станет "Истиной"
+    while (!foodCreated) {
+        // случайный выбор координат
+        var food_x = Math.floor(Math.random() * FIELD_SIZE_X);
+        var food_y = Math.floor(Math.random() * FIELD_SIZE_Y);
+
+        // согласно сгенерированным координатам получаем HTML элемент по имени класса
+        var food_cell = document.getElementsByClassName('cell-' + food_y + '-' + food_x)[0];
+        // <td class="game-table-cell cell-0-17"></td>
+        // Если список классов ячейки еды не содержит класса змейки и уже созданных барьеров
+        if (!barrierClass) { // Without barriars
+            if (!food_cell.classList.contains(snakeClass)) {
+                // Добавляем класс 'food-unit' к сгенерированной ячейке и она становится едой через CSS правило
+                food_cell.classList.add(foodClass); // [game-table-cell, cell-0-17, food-unit]
+
+                // Устанавливаем флаг "еда создана", статус foodCreated Истина
+                foodCreated = true;
+                // Выходим из цикла
+            }
+        } else {
+            if (!food_cell.classList.contains(snakeClass) && !food_cell.classList.contains(barrierClass)) {
+                // Добавляем класс 'food-unit' к сгенерированной ячейке и она становится едой через CSS правило
+                food_cell.classList.add(foodClass); // [game-table-cell, cell-0-17, food-unit]
+
+                // Устанавливаем флаг "еда создана", статус foodCreated Истина
+                foodCreated = true;
+                // Выходим из цикла
+            }
+        }
+
+    }
+    // Create brarriers if need
+    if (foodCreated && barrierClass) {
+        while (!barrierCreated) {
+            // случайный выбор координат
+            var barrier_x = Math.floor(Math.random() * FIELD_SIZE_X);
+            var barrier_y = Math.floor(Math.random() * FIELD_SIZE_Y);
+
+            // согласно сгенерированным координатам получаем HTML элемент по имени класса
+            var barrier_cell = document.getElementsByClassName('cell-' + barrier_x + '-' + barrier_y)[0];
+            // <td class="game-table-cell cell-0-17"></td>
+            // Если список классов ячейки барьера не содержит класса змейки и еды
+            if (!barrier_cell.classList.contains(snakeClass) && !barrier_cell.classList.contains(foodClass)) {
+                // Добавляем класс barrierClass к сгенерированной ячейке и она становится барьером через CSS правило
+                barrier_cell.classList.add(barrierClass); // [game-table-cell, cell-0-17, barrier-unit]
+
+                // Устанавливаем флаг
+                barrierCreated = true;
+                // Выходим из цикла
+            }
         }
     }
 }
@@ -271,6 +346,6 @@ function refreshGame() {
 window.onload = init;
 
 // Function Use barriers on field
-function useBarrier() {
+function useBarriers() {
     console.log('We use barriers');
 }
