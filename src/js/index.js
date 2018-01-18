@@ -4,12 +4,16 @@ var FIELD_SIZE_Y = 30; // столбцы
 var SNAKE_SPEED = 300; // Интервал между перемещениями змейки
 
 var snake = []; // Сама змейка, array of snakes elements
-var direction = 'y+'; // Начальное значение направления движения змейки вверх
+var direction = 'y+';
+// Начальное значение направления движения змейки вверх
 var gameIsRunning = false; // Статусный флаг: запущена ли игра
 var snake_timer; // Таймер змейки
 var food_timer; // Таймер для еды
 var score = 0; // Результат
-var scoreElem = document.querySelector(".display-score .score"); // Элемент отображения результата
+var scoreElem = document.querySelector(".display-score .score");
+// Элемент отображения результата
+var haveBarriers;
+// Boolean flag for use or nor "barriers" on field
 
 function init() {
     prepareGameField(); // Выполнение генерации поля
@@ -17,6 +21,7 @@ function init() {
     var wrap = document.getElementsByClassName('wrap')[0];
     // Подгоняем размер контейнера под игровое поле
     wrap.style.width = 'auto';
+
     // Добавление обработчиков событий 'click' к элементам кнопок 'Старт' - startGame, 'Новая игра' - refreshGame
     document.getElementById('snake-start').addEventListener('click', startGame);
     document.getElementById('snake-renew').addEventListener('click', refreshGame);
@@ -64,6 +69,11 @@ function startGame() {
     snake_timer = setInterval(move, SNAKE_SPEED);
     // Через 5с запускаем функцию создания еды 
     setTimeout(createFood, 5000);
+
+    haveBarriers = document.getElementById("barrierInput").checked; // set value of input checkbox
+    console.log('useBarrier: ' + haveBarriers);
+
+    if (haveBarriers) useBarrier(); // Use or not option "Barrier"
 }
 
 /**
@@ -247,7 +257,7 @@ function changeDirection(e) {
 function finishTheGame() {
     gameIsRunning = false;
     clearInterval(snake_timer);
-    alert('Вы проиграли!');
+    alert('The game finished / игра закончена!');
 }
 
 /**
@@ -259,3 +269,8 @@ function refreshGame() {
 
 // Инициализация
 window.onload = init;
+
+// Function Use barriers on field
+function useBarrier() {
+    console.log('We use barriers');
+}
